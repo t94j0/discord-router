@@ -32,5 +32,9 @@ class Router:
 
         for (tmpl, func) in self.commands:
             if tokens.match(tmpl):
-                await func(self, items=tokens.items(), message=message)
+                await func(
+                    self,
+                    items=tokens.items(),
+                    message=message,
+                    send=message.channel.send)
                 return

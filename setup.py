@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="discordrouter",
-    version="0.0.1",
+    version="0.0.2",
     author="Max Harley",
     author_email="maxh@maxh.io",
     description="Decorator for discord.py chat bots",
