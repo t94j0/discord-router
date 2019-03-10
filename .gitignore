@@ -1,0 +1,4 @@
+build
+dist
+discordrouter.egg-info/
+__pycache__
