@@ -7,8 +7,21 @@ def message(router: 'Router', template: str):
         router.add(template, func)
 
         @wraps(func)
-        async def wrapper(*args, **kwargs):
-            await func(*args, **kwargs)
+        async def wrapper(self, *args, **kwargs):
+            await func(self, *args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def guide(router: 'Router'):
+    def decorator(func):
+        router.set_guide(func)
+
+        @wraps(func)
+        async def wrapper(self, *args, **kwargs):
+            await func(self, *args, **kwargs)
 
         return wrapper
 
@@ -17,6 +30,7 @@ def message(router: 'Router', template: str):
 
 class Router:
     commands = []
+    guide = None
 
     def __init__(self, name: str):
         self.name = name
@@ -24,7 +38,10 @@ class Router:
     def add(self, template, func):
         self.commands.append((template, func))
 
-    async def __call__(self, message: 'discord.Message'):
+    def set_guide(self, func):
+        self.guide = func
+
+    async def __call__(self, _self, message: 'discord.Message'):
         tokens = Tokenizer(self.name, message.content)
 
         if not tokens.to_bot():
@@ -33,8 +50,10 @@ class Router:
         for (tmpl, func) in self.commands:
             if tokens.match(tmpl):
                 await func(
-                    self,
+                    _self,
                     items=tokens.items(),
                     message=message,
                     send=message.channel.send)
                 return
+        if self.guide != None:
+            await self.guide(_self, message=message, send=message.channel.send)
