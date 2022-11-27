@@ -27,7 +27,9 @@ class ChatBot(discord.Client):
 ```
 
 `items` is a dict of keys. Using the example above, if called with `!test new swag money`, `items` would contain `{'name': 'swag money'}`
+
 `send` is a link to `message.channel.send`
+
 `message` is the `discord.Message` object passed in from `on_message`
 
 
