@@ -25,3 +25,15 @@ class ChatBot(discord.Client):
     name = items['name']
     await message.channel.send('{name}')
 ```
+
+`items` is a dict of keys. Using the example above, if called with `!test new swag money`, `items` would contain `{'name': 'swag money'}`
+`send` is a link to `message.channel.send`
+`message` is the `discord.Message` object passed in from `on_message`
+
+
+Another example for fun
+```py
+@message(router, "list", "List all things")
+async def _list(self, message, send, **kwargs):
+  ...
+```
