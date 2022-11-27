@@ -18,7 +18,7 @@ class ChatBot(discord.Client):
     print(f'Logged in as {self.user.name}')
   
   async on_message(self, message):
-    await self.router(message)
+    await self.router(self, message)
 
   @message(router, "new <name>")
   async _test1(self, items, message):
